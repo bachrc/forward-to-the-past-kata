@@ -1,14 +1,9 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+use movies::Cart;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+mod movies;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub fn compute_price_for_movies(movies: &Vec<&str>) -> u32 {
+    let cart = Cart::from(movies);
+
+    cart.compute_cart_price()
 }
