@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 assertor = { version = "0.0.2", features = ["testing"] }
 itertools = "0.13.0"
+regex = "1.10.4"
 
 [lints]
 workspace = true

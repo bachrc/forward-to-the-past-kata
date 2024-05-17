@@ -1,13 +1,21 @@
 use std::collections::HashMap;
 
 use itertools::Itertools;
+use regex::{Captures, Match, Regex};
 
-#[derive(PartialEq, Eq, Hash)]
+pub static BACK_TO_THE_FUTURE_PATTERN: &str = r"(?i)back\ to\ the\ future\ (\d)";
+
+pub const BTTF_FILM_PRICE: usize = 15;
+pub const OTHER_FILM_PRICE: usize = 20;
+
+
+#[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 pub enum MovieType {
-    BackToTheFuture,
+    BackToTheFuture {iteration: u8},
     Other
 }
 
+#[derive(Debug)]
 pub struct Movie(String);
 
 impl From<&str> for Movie {
@@ -19,11 +27,22 @@ impl From<&str> for Movie {
 
 impl Movie {
     pub fn get_movie_type(&self) -> MovieType {
-        if self.0.to_lowercase().starts_with("back to the future") {
-            return MovieType::BackToTheFuture
-        }
+        let bttf_regex = Regex::new(BACK_TO_THE_FUTURE_PATTERN).expect("movie pattern to be valid");
 
-        return MovieType::Other
+        return match bttf_regex.captures(&self.0) {
+            Some(captured_iteration) => match Self::parse_iteration_in_name(captured_iteration) {
+                Some(iteration) => MovieType::BackToTheFuture { iteration },
+                None => MovieType::Other              
+            },
+            None => MovieType::Other,
+        }
+    }
+
+    fn parse_iteration_in_name(captured_iteration: Captures) -> Option<u8> {
+        captured_iteration.get(1)
+            .map(|capture| capture.as_str())
+            .map(|capture| capture.parse::<u8>().ok())
+            .flatten()
     }
 }
 
@@ -40,12 +59,32 @@ impl From<&Vec<&str>> for Cart {
 }
 
 impl Cart {
-    pub fn compute_cart_price(&self) -> u32 {
-        let movie_types: HashMap<MovieType, usize> = self.movies.iter()
+    pub fn compute_cart_price(&self) -> f32 {
+        let movies_count: HashMap<MovieType, usize> = self.movies.iter()
             .counts_by(Movie::get_movie_type);
-
-        let number_of_bttf = movie_types.get(&MovieType::BackToTheFuture).cloned().unwrap_or(0);
         
-        (number_of_bttf * 15) as u32
+        let number_of_other_films = movies_count.get(&MovieType::Other).cloned().unwrap_or(0);
+        let total_price_for_other_films = (number_of_other_films * OTHER_FILM_PRICE) as f32;
+
+        let bougth_bttf_films: HashMap<&MovieType, &usize> = movies_count.iter()
+            .filter(|(movie_type, _)| movie_type != &&MovieType::Other)
+            .collect();
+
+        let total_bttf_films_bought: usize = bougth_bttf_films.values().cloned().sum();
+        
+        let number_of_different_bttf_iterations = bougth_bttf_films.keys().count();
+        let discount_for_bttf_movies = Cart::discount_for_number_of_different_films(number_of_different_bttf_iterations);
+
+        let total_price_for_bttf_movies: f32 = (total_bttf_films_bought * BTTF_FILM_PRICE) as f32 * discount_for_bttf_movies;
+        
+        total_price_for_bttf_movies + total_price_for_other_films
+    }
+
+    fn discount_for_number_of_different_films(different_iterations: usize) -> f32 {
+        match different_iterations {
+            0 | 1 => 1.0,
+            2 => 0.9,
+            _ => 0.8
+        }
     }
 }

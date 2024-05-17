@@ -9,5 +9,5 @@ fn price_calculation_for_all_films_in_a_trilogy() {
 
     let price_for_films = compute_price_for_movies(&films_bought);
 
-    assert_that!(price_for_films).is_equal_to(36)
+    assert_that!(price_for_films).is_equal_to(36.0)
 }
