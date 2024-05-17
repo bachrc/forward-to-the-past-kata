@@ -18,3 +18,12 @@ fn two_different_films_from_trilogy_have_a_discount_of_10_percents() {
 
     assert_that!(total_price).is_equal_to(27.0)
 }
+
+#[test]
+fn three_different_films_from_trilogy_have_a_discount_of_20_percents() {
+    let films_bought = vec!["Back to the Future 1", "Back to the Future 2", "Back to the Future 3"];
+
+    let total_price = compute_price_for_movies(&films_bought);
+
+    assert_that!(total_price).is_equal_to(36.0)
+}

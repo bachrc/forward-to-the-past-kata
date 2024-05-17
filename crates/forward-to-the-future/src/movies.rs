@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use itertools::Itertools;
-use regex::{Captures, Match, Regex};
+use regex::{Captures, Regex};
 
 pub static BACK_TO_THE_FUTURE_PATTERN: &str = r"(?i)back\ to\ the\ future\ (\d)";
 
