@@ -60,24 +60,32 @@ impl From<&Vec<&str>> for Cart {
 
 impl Cart {
     pub fn compute_cart_price(&self) -> f32 {
-        let movies_count: HashMap<MovieType, usize> = self.movies.iter()
+        let price_of_other_films = self.compute_other_films_price();
+        let price_for_bttf_films = self.compute_bttf_films_price();
+        
+        price_of_other_films + price_for_bttf_films
+    }
+
+    fn compute_other_films_price(&self) -> f32 {
+        let number_of_other_films = self.movies.iter()
+            .map(Movie::get_movie_type)
+            .filter(|movie_type| movie_type == &MovieType::Other)
+            .count();
+            
+        (number_of_other_films * OTHER_FILM_PRICE) as f32
+    }
+    
+    fn compute_bttf_films_price(&self) -> f32 {
+        let bttf_movies_count: HashMap<MovieType, usize> = self.movies.iter()
+            .filter(|movie| movie.get_movie_type() != MovieType::Other)
             .counts_by(Movie::get_movie_type);
-        
-        let number_of_other_films = movies_count.get(&MovieType::Other).cloned().unwrap_or(0);
-        let total_price_for_other_films = (number_of_other_films * OTHER_FILM_PRICE) as f32;
 
-        let bougth_bttf_films: HashMap<&MovieType, &usize> = movies_count.iter()
-            .filter(|(movie_type, _)| movie_type != &&MovieType::Other)
-            .collect();
-
-        let total_bttf_films_bought: usize = bougth_bttf_films.values().cloned().sum();
+        let total_bttf_films_bought: usize = bttf_movies_count.values().cloned().sum();
         
-        let number_of_different_bttf_iterations = bougth_bttf_films.keys().count();
-        let discount_for_bttf_movies = Cart::discount_for_number_of_different_films(number_of_different_bttf_iterations);
+        let number_of_different_bttf_iterations = bttf_movies_count.keys().count();
+        let discount_for_bttf_movies = Self::discount_for_number_of_different_films(number_of_different_bttf_iterations);
 
-        let total_price_for_bttf_movies: f32 = (total_bttf_films_bought * BTTF_FILM_PRICE) as f32 * discount_for_bttf_movies;
-        
-        total_price_for_bttf_movies + total_price_for_other_films
+        (total_bttf_films_bought * BTTF_FILM_PRICE) as f32 * discount_for_bttf_movies
     }
 
     fn discount_for_number_of_different_films(different_iterations: usize) -> f32 {
