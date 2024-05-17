@@ -1,0 +1,9 @@
+[package]
+name = "forward-to-the-future"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lints]
+workspace = true

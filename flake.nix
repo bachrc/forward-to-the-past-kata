@@ -43,6 +43,7 @@
       devDependencies = with pkgs; [
         nil
         just
+        cargo-watch
       ];
       src = craneLib.cleanCargoSource ./.;
 
