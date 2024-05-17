@@ -1,22 +1,45 @@
-use clap::Parser;
+use std::fs;
 
-/// Simple program to greet a person
+use clap::Parser;
+use forward_to_the_future::compute_price_for_movies;
+
+use anyhow::{Context, Ok, Result};
+
+/// Your useful tool to optimize the special Back to the Future event
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
-    /// Name of the person to greet
+    /// Path to the file containing the movie's list
     #[arg(short, long)]
-    name: String,
-
-    /// Number of times to greet
-    #[arg(short, long, default_value_t = 1)]
-    count: u8,
+    file: String,
 }
 
-fn main() {
+fn main() -> Result<()> {
     let args = Args::parse();
 
-    for _ in 0..args.count {
-        println!("Hello {}!", args.name)
-    }
+    println!("Welcome to the very official CLI of this BTTF commercial event.");
+    println!("Computing the final price for the cart at path {}", args.file);
+
+    let cart_content: Vec<String> = parse_file_content(args.file).context("parse the cart content")?;
+
+    let total_price = compute_price_for_movies(&cart_content.iter().map(|f| f.as_ref()).collect());
+
+    println!("The total price of the cart is {}", total_price);
+
+    Ok(())
+}
+
+fn parse_file_content(file: String) -> Result<Vec<String>> {
+    let file_content = fs::read_to_string(file).context("read the file content")?;
+    let lines : Vec<String> = file_content.lines()
+        .map(String::from)
+        .filter(|line| !line.is_empty())
+        .collect();
+
+    Ok(lines)
+}
+
+#[test]
+fn parses_well_the_text_file() {
+
 }

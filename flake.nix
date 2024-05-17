@@ -30,14 +30,11 @@
         ];
       };
 
-      inherit (pkgs) lib;
-
       rust-toolchain = (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml);
       craneLib = (crane.mkLib pkgs).overrideToolchain rust-toolchain;
 
       buildInputs = [
         rust-toolchain
-        pkgs.mold
       ];
 
       devDependencies = with pkgs; [
@@ -62,9 +59,6 @@
       devShells = {
         default = with pkgs; mkShell {
           buildInputs = [ buildInputs devDependencies ];
-          shellHook = ''
-            export MOLD_PATH=${mold}/bin/mold
-          '';
         };
       };
 

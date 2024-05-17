@@ -61,6 +61,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.83"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25bdb32cbbdce2b519a9cd7df3a678443100e265d5e25ca763b7572a5104f5f3"
+
+[[package]]
 name = "assertor"
 version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -119,7 +125,9 @@ checksum = "98cc8fbded0c607b7ba9dd60cd98df59af97e84d24e49c8557331cfc26d301ce"
 name = "cli"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "clap",
+ "forward-to-the-future",
 ]
 
 [[package]]
