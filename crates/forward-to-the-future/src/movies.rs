@@ -16,20 +16,23 @@ pub enum MovieType {
 }
 
 #[derive(Debug)]
-pub struct Movie(String);
+pub struct Movie {
+    pub title: String
+}
 
 impl From<&str> for Movie {
-    fn from(value: &str) -> Self {
-        Movie(String::from(value))
+    fn from(title: &str) -> Self {
+        Movie {
+            title: String::from(title)
+        }
     }
-
 }
 
 impl Movie {
     pub fn get_movie_type(&self) -> MovieType {
         let bttf_regex = Regex::new(BACK_TO_THE_FUTURE_PATTERN).expect("movie pattern to be valid");
 
-        return match bttf_regex.captures(&self.0) {
+        return match bttf_regex.captures(&self.title) {
             Some(captured_iteration) => match Self::parse_iteration_in_name(captured_iteration) {
                 Some(iteration) => MovieType::BackToTheFuture { iteration },
                 None => MovieType::Other              
