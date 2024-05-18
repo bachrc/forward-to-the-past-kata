@@ -35,6 +35,9 @@
 
       buildInputs = [
         rust-toolchain
+      ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+        # Additional darwin specific inputs can be set here
+        pkgs.libiconv
       ];
 
       devDependencies = with pkgs; [
