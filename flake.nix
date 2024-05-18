@@ -45,7 +45,8 @@
       src = craneLib.cleanCargoSource ./.;
 
       crate = craneLib.buildPackage {
-        inherit src;
+        inherit src buildInputs;
+  
         pname = "store-cli";
         strictDeps = true;
         nativeBuildInputs = buildInputs;
