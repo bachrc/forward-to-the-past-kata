@@ -18,7 +18,7 @@ nix run github:bachrc/forward-to-the-past-kata -- --file cartexample.txt
 
 ### Lancement en local
 
-Afin de lancer le programme, vous pouvez télécharger le binaire, et l'utiliser de la sorte:
+Afin de lancer le programme, vous pouvez télécharger le binaire via les [releases Github](https://github.com/bachrc/forward-to-the-past-kata/releases), et l'utiliser de la sorte:
 
 ```bash
 ./store-cli --file ./cartexample.txt 
