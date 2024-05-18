@@ -8,6 +8,14 @@ Vous pouvez télécharger le binaire via les releases de ce dépot.
 
 ## Utilisation
 
+### Lancement avec Nix
+
+Si vous disposez du gestionnaire de paquets [Nix](https://nixos.org/), vous pouvez lancer le programme avec la commande suivante :
+
+```bash
+nix run github:bachrc/forward-to-the-past-kata -- --file cartexample.txt
+```
+
 ### Lancement en local
 
 Afin de lancer le programme, vous pouvez télécharger le binaire, et l'utiliser de la sorte:
@@ -53,12 +61,6 @@ L'équipe de production vous charge d'écrire un programme qui aura le comportem
 En entrée, un panier sous forme de texte, séparé par des retours à la ligne qui contient le nom des films achetés
 En sortie, le nombre représentant le prix
 Vous êtes libre de montrer le résultat de la manière qui vous convient et cela peut rester très minimaliste, tant qu'il est clair que le programme sait lire le format d'entrée et qu'il suit bien les règles spécifiées. Néanmoins, comme indiqué en début d’énoncé, ce code devra être traité comme si vous l’initiiez pour votre future équipe.
-
-### Contexte technique
-
-Vous pourrez choisir le langage qui vous paraîtra le plus pertinent (dans lequel vous êtes à l'aise, c'est mieux), et qui devra pouvoir s'exécuter sur une JVM ou en Python. Vous vous assurerez que le livrable permette à quelqu'un ayant le SDK adéquat de lancer, utiliser et maintenir votre programme aisément. En résumé, le code doit être de très bonne qualité.
-
-Lors de l’éventuel entretien, venez avec votre code sur votre PC (pour vous permettre d’avoir un support sur lequel vous avez la main).
 
 ### Exemples d’entrées et sortie
 
