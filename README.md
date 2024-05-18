@@ -1,4 +1,10 @@
-# Forward To The Future
+# Forward To The Past
+
+Ce projet contient un kata réalisé en Rust, avec du TDD.
+
+## Installation
+
+Vous pouvez télécharger le binaire via les releases de ce dépot.
 
 ## Utilisation
 
@@ -7,7 +13,7 @@
 Afin de lancer le programme, vous pouvez télécharger le binaire, et l'utiliser de la sorte:
 
 ```bash
-./compute-price --movies movies.txt 
+./store-cli --file ./cartexample.txt 
 ```
 
 ### Contribuer
@@ -19,6 +25,7 @@ est recommandée.
 # Cette commande télécharge toutes les dépendances du projet
 nix develop
 
+# Vous entrez dans un shell où toutes les dépendances sont disponibles. 
 # Cette commande contruit le projet
 just build
 
