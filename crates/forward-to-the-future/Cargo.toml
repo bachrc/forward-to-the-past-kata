@@ -1,7 +1,9 @@
 [package]
 name = "forward-to-the-future"
-version = "0.1.0"
 edition = "2021"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
 
 [dependencies]
 assertor = { version = "0.0.2", features = ["testing"] }

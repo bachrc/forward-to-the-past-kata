@@ -1,8 +1,9 @@
 [package]
-name = "cli"
-version = "0.1.0"
+name = "store-cli"
 edition = "2021"
-
+version.workspace = true
+authors.workspace = true
+description.workspace = true
 
 [dependencies]
 anyhow = { version = "1.0.83"}
