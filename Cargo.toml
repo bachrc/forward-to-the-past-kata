@@ -2,5 +2,10 @@
 members = ["crates/cli", "crates/forward-to-the-future"]
 resolver = "2"
 
+[workspace.package]
+version = "1.0.1"
+authors = ["bachrc"]
+description = "A Rust kata"
+
 [workspace.lints.rust]
 unsafe_code = "forbid"

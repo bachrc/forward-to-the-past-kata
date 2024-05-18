@@ -46,6 +46,7 @@
 
       crate = craneLib.buildPackage {
         inherit src;
+        pname = "store-cli";
         strictDeps = true;
         nativeBuildInputs = buildInputs;
         doCheck = false;
@@ -64,6 +65,10 @@
 
       # run with `nix shell`
       packages.default = crate;
+
+      apps.default = flake-utils.lib.mkApp {
+        drv = crate;
+      };
     });
 
     
